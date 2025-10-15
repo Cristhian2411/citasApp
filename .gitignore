@@ -1,0 +1,29 @@
+# Archivos de compilación
+/target/
+*.class
+*.jar
+*.war
+
+# Configuración de IDE
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Logs
+*.log
+
+# Archivos temporales
+*.tmp
+*.bak
+*.swp
+
+# Configuración local
+application.properties
+application-test.properties
+
+# Sistema
+.DS_Store
+Thumbs.db
