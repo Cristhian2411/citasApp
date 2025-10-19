@@ -3,13 +3,14 @@ package citasAPP.security;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
-import java.util.Date;
+
 import java.security.Key;
+import java.util.Date;
 
 @Component
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "mi_clave_secreta_segura_para_jwt_123456789"; // cámbiala por una más larga
+    private static final String SECRET_KEY = "mi_clave_super_segura_para_jwt_de_al_menos_32_caracteres_12345";
     private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hora
 
     private Key getSigningKey() {

@@ -1,14 +1,15 @@
 package citasAPP.controller;
 
+import citasAPP.config.TestSecurityConfig;
 import citasAPP.entity.Cita;
 import citasAPP.service.interfaces.CitaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -22,6 +23,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@Import(TestSecurityConfig.class)
 @WebMvcTest(CitaController.class)
 class CitaControllerTest {
 
@@ -46,8 +48,7 @@ class CitaControllerTest {
         citaValida.setIdPaciente(3L);
     }
 
-
-
+    // ✅ Listar citas
     @Test
     void listarCitas_deberiaRetornarListaDeCitas() throws Exception {
         List<Cita> citas = Arrays.asList(citaValida, new Cita());
@@ -60,8 +61,7 @@ class CitaControllerTest {
         verify(citaService, times(1)).listarCitas();
     }
 
-
-
+    // ✅ Obtener cita válida
     @Test
     void obtenerCitaPorId_valido_deberiaRetornarCita() throws Exception {
         when(citaService.obtenerCitaPorId(1L)).thenReturn(citaValida);
@@ -73,17 +73,20 @@ class CitaControllerTest {
         verify(citaService, times(1)).obtenerCitaPorId(1L);
     }
 
+    // ✅ Obtener cita inválida
     @Test
     void obtenerCitaPorId_invalido_deberiaRetornarBadRequest() throws Exception {
-        when(citaService.obtenerCitaPorId(null))
-                .thenThrow(new IllegalArgumentException("El ID no puede ser nulo"));
+        when(citaService.obtenerCitaPorId(99L))
+                .thenThrow(new IllegalArgumentException("El ID no existe"));
 
-        mockMvc.perform(get("/api/citas/null"))
-                .andExpect(status().isBadRequest());
+        mockMvc.perform(get("/api/citas/99"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Error al obtener la cita")));
+
+        verify(citaService, times(1)).obtenerCitaPorId(99L);
     }
 
-
-
+    // ✅ Crear cita válida
     @Test
     void crearCita_valida_deberiaRetornarOk() throws Exception {
         doNothing().when(citaService).crearCita(any(Cita.class));
@@ -97,6 +100,7 @@ class CitaControllerTest {
         verify(citaService, times(1)).crearCita(any(Cita.class));
     }
 
+    // ✅ Crear cita inválida
     @Test
     void crearCita_invalida_deberiaRetornarBadRequest() throws Exception {
         doThrow(new IllegalArgumentException("La fecha y hora son obligatorias"))
@@ -111,8 +115,7 @@ class CitaControllerTest {
         verify(citaService, times(1)).crearCita(any(Cita.class));
     }
 
-
-
+    // ✅ Actualizar cita válida
     @Test
     void actualizarCita_valida_deberiaRetornarOk() throws Exception {
         doNothing().when(citaService).actualizarCita(any(Cita.class));
@@ -126,6 +129,7 @@ class CitaControllerTest {
         verify(citaService, times(1)).actualizarCita(any(Cita.class));
     }
 
+    // ✅ Actualizar cita inválida
     @Test
     void actualizarCita_invalida_deberiaRetornarBadRequest() throws Exception {
         doThrow(new IllegalArgumentException("ID inválido"))
@@ -140,8 +144,7 @@ class CitaControllerTest {
         verify(citaService, times(1)).actualizarCita(any(Cita.class));
     }
 
-
-
+    // ✅ Eliminar cita válida
     @Test
     void eliminarCita_valida_deberiaRetornarOk() throws Exception {
         doNothing().when(citaService).eliminarCita(1L);
@@ -153,6 +156,7 @@ class CitaControllerTest {
         verify(citaService, times(1)).eliminarCita(1L);
     }
 
+    // ✅ Eliminar cita inválida
     @Test
     void eliminarCita_invalida_deberiaRetornarBadRequest() throws Exception {
         doThrow(new IllegalArgumentException("Debe proporcionar un ID válido"))

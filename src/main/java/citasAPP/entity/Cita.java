@@ -9,7 +9,7 @@ import java.time.LocalTime;
 public class Cita {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "id_medico", nullable = false)
@@ -30,13 +30,18 @@ public class Cita {
     public Cita() {}
 
     //Constructor completo
-    public Cita(Long id, Long idMedico, Long idPaciente, LocalDate fecha, LocalTime hora, String motivo) {
+    public Cita(Long id, LocalDate fecha, LocalTime hora, String motivo, Paciente paciente, Medico medico)
+    {
         this.id = id;
-        this.idMedico = idMedico;
-        this.idPaciente = idPaciente;
         this.fecha = fecha;
         this.hora = hora;
         this.motivo = motivo;
+        this.idPaciente = idPaciente;
+        this.idMedico = idMedico;
+
+
+
+
     }
 
     // ---------- Getters y Setters ----------

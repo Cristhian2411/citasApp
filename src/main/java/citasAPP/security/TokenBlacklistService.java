@@ -9,7 +9,7 @@ public class TokenBlacklistService {
 
     private final Set<String> blacklist = new HashSet<>();
 
-    public void addToken(String token) {
+    public void addToBlacklist(String token) {
         blacklist.add(token);
     }
 

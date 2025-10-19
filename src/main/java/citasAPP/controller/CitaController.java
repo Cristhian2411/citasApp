@@ -15,54 +15,54 @@ public class CitaController {
 
     private final CitaService citaService;
 
-    //Inyección por constructor
+    // Inyección por constructor (recomendada)
     @Autowired
     public CitaController(CitaService citaService) {
         this.citaService = citaService;
     }
 
-    //  Obtener todas las citas
+    // ✅ Obtener todas las citas
     @GetMapping
     public ResponseEntity<List<Cita>> listarCitas() {
         List<Cita> citas = citaService.listarCitas();
         return ResponseEntity.ok(citas);
     }
 
-    //  Obtener una cita por ID
+    // ✅ Obtener una cita por ID
     @GetMapping("/{id}")
     public ResponseEntity<?> obtenerCitaPorId(@PathVariable Long id) {
         try {
             Cita cita = citaService.obtenerCitaPorId(id);
             return ResponseEntity.ok(cita);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body("Error al obtener la cita: " + e.getMessage());
         }
     }
 
-    //  Crear una nueva cita
+    // ✅ Crear una nueva cita
     @PostMapping
     public ResponseEntity<String> crearCita(@RequestBody Cita cita) {
         try {
             citaService.crearCita(cita);
-            return ResponseEntity.ok("✅ Cita creada correctamente.");
+            return ResponseEntity.ok("Cita creada correctamente.");
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(" Error al crear la cita: " + e.getMessage());
+            return ResponseEntity.badRequest().body("Error al crear la cita: " + e.getMessage());
         }
     }
 
-    // Actualizar una cita existente
+    // ✅ Actualizar una cita existente
     @PutMapping("/{id}")
     public ResponseEntity<String> actualizarCita(@PathVariable Long id, @RequestBody Cita cita) {
         try {
             cita.setId(id);
             citaService.actualizarCita(cita);
-            return ResponseEntity.ok("✅ Cita actualizada correctamente.");
+            return ResponseEntity.ok("Cita actualizada correctamente.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("Error al actualizar la cita: " + e.getMessage());
         }
     }
 
-    // Eliminar una cita
+    // ✅ Eliminar una cita
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarCita(@PathVariable Long id) {
         try {
