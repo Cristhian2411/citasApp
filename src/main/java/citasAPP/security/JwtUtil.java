@@ -10,11 +10,16 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "mi_clave_super_segura_para_jwt_de_al_menos_32_caracteres_12345";
     private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hora
 
-    private Key getSigningKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    private final Key signingKey;
+
+    public JwtUtil() {
+        String secret = System.getenv("SECRET_KEY");
+        if (secret == null || secret.isEmpty()) {
+            secret = "mi_clave_secreta_segura_para_jwt_123456789"; // valor por defecto local
+        }
+        this.signingKey = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
     public String generateToken(String username, String role) {
@@ -23,13 +28,13 @@ public class JwtUtil {
                 .claim("role", role)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .signWith(signingKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(signingKey).build().parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             return false;
@@ -38,7 +43,7 @@ public class JwtUtil {
 
     public String extractUsername(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
+                .setSigningKey(signingKey)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
