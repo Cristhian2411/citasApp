@@ -18,17 +18,17 @@ import java.time.LocalTime;
 
 @Component
 @RequiredArgsConstructor
-@Profile("test") // 🔹 se ejecuta solo cuando el perfil es "test"
+@Profile("test") //ejecuta solo cuando el perfil es "test"
 public class TestDataLoader {
 
     private final PacienteRepository pacienteRepository;
     private final MedicoRepository medicoRepository;
     private final CitaRepository citaRepository;
 
-    /**
-     * Cargamos datos iniciales solo para los tests.
-     * Usamos una nueva transacción para evitar errores de "prepared statement already exists".
-     */
+
+     //Cargamos datos iniciales solo para los tests.
+     //Usamos una nueva transacción para evitar errores de "prepared statement already exists".
+
     @PostConstruct
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void initData() {

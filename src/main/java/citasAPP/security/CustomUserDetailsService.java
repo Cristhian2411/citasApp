@@ -15,7 +15,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         if ("admin".equals(username)) {
             return User.builder()
                     .username("admin")
-                    .password("admin123") // 👉 sin encriptar
+                    .password("admin123")
                     .roles("ADMIN")
                     .build();
         }

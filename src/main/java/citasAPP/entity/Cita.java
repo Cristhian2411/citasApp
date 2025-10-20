@@ -1,6 +1,7 @@
 package citasAPP.entity;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -27,11 +28,11 @@ public class Cita {
     private String motivo;
 
     // Constructor vacío
-    public Cita() {}
+    public Cita() {
+    }
 
     //Constructor completo
-    public Cita(Long id, LocalDate fecha, LocalTime hora, String motivo, Paciente paciente, Medico medico)
-    {
+    public Cita(Long id, LocalDate fecha, LocalTime hora, String motivo, Paciente paciente, Medico medico) {
         this.id = id;
         this.fecha = fecha;
         this.hora = hora;
@@ -40,28 +41,56 @@ public class Cita {
         this.idMedico = idMedico;
 
 
-
-
     }
 
-    // ---------- Getters y Setters ----------
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    //Getters y Setters
+    public Long getId() {
+        return id;
+    }
 
-    public Long getIdMedico() { return idMedico; }
-    public void setIdMedico(Long idMedico) { this.idMedico = idMedico; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public Long getIdPaciente() { return idPaciente; }
-    public void setIdPaciente(Long idPaciente) { this.idPaciente = idPaciente; }
+    public Long getIdMedico() {
+        return idMedico;
+    }
 
-    public LocalDate getFecha() { return fecha; }
-    public void setFecha(LocalDate fecha) { this.fecha = fecha; }
+    public void setIdMedico(Long idMedico) {
+        this.idMedico = idMedico;
+    }
 
-    public LocalTime getHora() { return hora; }
-    public void setHora(LocalTime hora) { this.hora = hora; }
+    public Long getIdPaciente() {
+        return idPaciente;
+    }
 
-    public String getMotivo() { return motivo; }
-    public void setMotivo(String motivo) { this.motivo = motivo; }
+    public void setIdPaciente(Long idPaciente) {
+        this.idPaciente = idPaciente;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    public LocalTime getHora() {
+        return hora;
+    }
+
+    public void setHora(LocalTime hora) {
+        this.hora = hora;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
 
     @Override
     public String toString() {

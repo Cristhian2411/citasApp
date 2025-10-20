@@ -26,21 +26,21 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // ✅ Endpoints públicos
+                        // Endpoints públicos
                         .requestMatchers("/api/auth/**").permitAll()
-                        // 🔒 Todo lo demás requiere autenticación
+                        //Todo lo demás requiere autenticación
                         .anyRequest().authenticated()
                 )
-                // ✅ Inserta el filtro JWT antes del estándar de Spring
+                //Inserta el filtro JWT antes del estándar de Spring
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
-    // ✅ Para pruebas: sin encriptar contraseñas
+
     @Bean
     public PasswordEncoder passwordEncoder() {
-        // ⚠️ No usar en producción: esto acepta contraseñas planas
+
         return NoOpPasswordEncoder.getInstance();
     }
 

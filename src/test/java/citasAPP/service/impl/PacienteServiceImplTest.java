@@ -44,7 +44,7 @@ class PacienteServiceImplTest {
         pacienteDto = new PacienteDto(paciente);
     }
 
-    // ------------------ TEST LISTAR ------------------
+    //Test listar
     @Test
     void listarPacientes_deberiaRetornarListaDeDtos() {
         when(pacienteRepository.findAll()).thenReturn(Arrays.asList(paciente));
@@ -56,7 +56,7 @@ class PacienteServiceImplTest {
         verify(pacienteRepository, times(1)).findAll();
     }
 
-    // ------------------ TEST OBTENER ------------------
+    //testObtener
     @Test
     void obtenerPacientePorId_valido_deberiaRetornarDto() {
         when(pacienteRepository.findById(1L)).thenReturn(Optional.of(paciente));
@@ -74,7 +74,7 @@ class PacienteServiceImplTest {
         assertThrows(RuntimeException.class, () -> pacienteService.obtenerPacientePorId(99L));
     }
 
-    // ------------------ TEST CREAR ------------------
+    //test obtener
     @Test
     void crearPaciente_valido_deberiaGuardarYRetornarDto() {
         when(pacienteRepository.save(any(Paciente.class))).thenReturn(paciente);
@@ -86,7 +86,7 @@ class PacienteServiceImplTest {
         verify(pacienteRepository, times(1)).save(any(Paciente.class));
     }
 
-    // ------------------ TEST ACTUALIZAR ------------------
+    //Test actualizar
     @Test
     void actualizarPaciente_valido_deberiaModificarYRetornarDto() {
         when(pacienteRepository.findById(1L)).thenReturn(Optional.of(paciente));
@@ -106,7 +106,7 @@ class PacienteServiceImplTest {
         assertThrows(RuntimeException.class, () -> pacienteService.actualizarPaciente(99L, pacienteDto));
     }
 
-    // ------------------ TEST ELIMINAR ------------------
+    //test eliminar
     @Test
     void eliminarPaciente_valido_deberiaLlamarRepositorio() {
         when(pacienteRepository.existsById(1L)).thenReturn(true);

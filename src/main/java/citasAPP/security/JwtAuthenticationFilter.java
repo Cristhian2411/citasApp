@@ -31,7 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        // 🚫 Evita recursión en el endpoint de login
+        //Evita recursión en el endpoint de login
         if (request.getRequestURI().startsWith("/api/auth/login")) {
             filterChain.doFilter(request, response);
             return;

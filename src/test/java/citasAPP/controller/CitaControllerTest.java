@@ -48,7 +48,7 @@ class CitaControllerTest {
         citaValida.setIdPaciente(3L);
     }
 
-    // ✅ Listar citas
+    //Listar citas
     @Test
     void listarCitas_deberiaRetornarListaDeCitas() throws Exception {
         List<Cita> citas = Arrays.asList(citaValida, new Cita());
@@ -61,7 +61,7 @@ class CitaControllerTest {
         verify(citaService, times(1)).listarCitas();
     }
 
-    // ✅ Obtener cita válida
+    //Obtener cita válida
     @Test
     void obtenerCitaPorId_valido_deberiaRetornarCita() throws Exception {
         when(citaService.obtenerCitaPorId(1L)).thenReturn(citaValida);
@@ -73,7 +73,7 @@ class CitaControllerTest {
         verify(citaService, times(1)).obtenerCitaPorId(1L);
     }
 
-    // ✅ Obtener cita inválida
+    //Obtener cita inválida
     @Test
     void obtenerCitaPorId_invalido_deberiaRetornarBadRequest() throws Exception {
         when(citaService.obtenerCitaPorId(99L))
@@ -86,7 +86,7 @@ class CitaControllerTest {
         verify(citaService, times(1)).obtenerCitaPorId(99L);
     }
 
-    // ✅ Crear cita válida
+    //Crear cita válida
     @Test
     void crearCita_valida_deberiaRetornarOk() throws Exception {
         doNothing().when(citaService).crearCita(any(Cita.class));
@@ -100,7 +100,7 @@ class CitaControllerTest {
         verify(citaService, times(1)).crearCita(any(Cita.class));
     }
 
-    // ✅ Crear cita inválida
+    //Crear cita inválida
     @Test
     void crearCita_invalida_deberiaRetornarBadRequest() throws Exception {
         doThrow(new IllegalArgumentException("La fecha y hora son obligatorias"))
@@ -115,7 +115,7 @@ class CitaControllerTest {
         verify(citaService, times(1)).crearCita(any(Cita.class));
     }
 
-    // ✅ Actualizar cita válida
+    //Actualizar cita válida
     @Test
     void actualizarCita_valida_deberiaRetornarOk() throws Exception {
         doNothing().when(citaService).actualizarCita(any(Cita.class));
@@ -129,7 +129,7 @@ class CitaControllerTest {
         verify(citaService, times(1)).actualizarCita(any(Cita.class));
     }
 
-    // ✅ Actualizar cita inválida
+    //Actualizar cita inválida
     @Test
     void actualizarCita_invalida_deberiaRetornarBadRequest() throws Exception {
         doThrow(new IllegalArgumentException("ID inválido"))
@@ -144,7 +144,7 @@ class CitaControllerTest {
         verify(citaService, times(1)).actualizarCita(any(Cita.class));
     }
 
-    // ✅ Eliminar cita válida
+    //Eliminar cita válida
     @Test
     void eliminarCita_valida_deberiaRetornarOk() throws Exception {
         doNothing().when(citaService).eliminarCita(1L);
@@ -156,7 +156,7 @@ class CitaControllerTest {
         verify(citaService, times(1)).eliminarCita(1L);
     }
 
-    // ✅ Eliminar cita inválida
+    //Eliminar cita inválida
     @Test
     void eliminarCita_invalida_deberiaRetornarBadRequest() throws Exception {
         doThrow(new IllegalArgumentException("Debe proporcionar un ID válido"))

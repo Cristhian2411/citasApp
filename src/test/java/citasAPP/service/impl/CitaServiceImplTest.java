@@ -40,7 +40,7 @@ class CitaServiceImplTest {
         citaValida.setIdPaciente(3L);
     }
 
-    // ------------------ TEST CREAR CITA ------------------
+    //Test crear cita
 
     @Test
     void crearCita_valida_deberiaGuardarCita() {
@@ -69,7 +69,7 @@ class CitaServiceImplTest {
         verify(citaRepository, never()).save(any());
     }
 
-    // ------------------ TEST OBTENER CITA ------------------
+    //Test obtener cita
 
     @Test
     void obtenerCitaPorId_valido_deberiaRetornarCita() {
@@ -94,7 +94,7 @@ class CitaServiceImplTest {
         assertThrows(IllegalArgumentException.class, () -> citaService.obtenerCitaPorId(99L));
     }
 
-    // ------------------ TEST ACTUALIZAR CITA ------------------
+    //Test actualizar cita
 
     @Test
     void actualizarCita_valida_deberiaGuardarCita() {
@@ -117,7 +117,7 @@ class CitaServiceImplTest {
         verify(citaRepository, never()).save(any());
     }
 
-    // ------------------ TEST ELIMINAR CITA ------------------
+    // Test eliminar cita
 
     @Test
     void eliminarCita_valido_deberiaEliminarCita() {
@@ -139,7 +139,7 @@ class CitaServiceImplTest {
         verify(citaRepository, never()).deleteById(any());
     }
 
-    // ------------------ TEST LISTAR CITAS ------------------
+    //test listar citas
 
     @Test
     void listarCitas_deberiaRetornarListaDeCitas() {

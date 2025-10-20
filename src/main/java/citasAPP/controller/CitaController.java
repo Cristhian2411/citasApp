@@ -15,20 +15,20 @@ public class CitaController {
 
     private final CitaService citaService;
 
-    // Inyección por constructor (recomendada)
+    // Inyección por constructor
     @Autowired
     public CitaController(CitaService citaService) {
         this.citaService = citaService;
     }
 
-    // ✅ Obtener todas las citas
+    // Obtener todas las citas
     @GetMapping
     public ResponseEntity<List<Cita>> listarCitas() {
         List<Cita> citas = citaService.listarCitas();
         return ResponseEntity.ok(citas);
     }
 
-    // ✅ Obtener una cita por ID
+    // Obtener una cita por ID
     @GetMapping("/{id}")
     public ResponseEntity<?> obtenerCitaPorId(@PathVariable Long id) {
         try {
@@ -39,7 +39,7 @@ public class CitaController {
         }
     }
 
-    // ✅ Crear una nueva cita
+    // Crear una nueva cita
     @PostMapping
     public ResponseEntity<String> crearCita(@RequestBody Cita cita) {
         try {
@@ -50,7 +50,7 @@ public class CitaController {
         }
     }
 
-    // ✅ Actualizar una cita existente
+    //Actualizar una cita existente
     @PutMapping("/{id}")
     public ResponseEntity<String> actualizarCita(@PathVariable Long id, @RequestBody Cita cita) {
         try {
@@ -62,7 +62,7 @@ public class CitaController {
         }
     }
 
-    // ✅ Eliminar una cita
+    //Eliminar una cita
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarCita(@PathVariable Long id) {
         try {
