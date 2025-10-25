@@ -2,6 +2,7 @@ package citasAPP.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,7 +27,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Endpoints públicos (Swagger y autenticación)
+                        // 🔓 Endpoints públicos (Swagger + autenticación)
                         .requestMatchers(
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
@@ -34,7 +35,15 @@ public class SecurityConfig {
                                 "/api/auth/**"
                         ).permitAll()
 
-                        //Todo lo demás requiere autenticación JWT
+                        // 👀 Endpoints de lectura de citas (GET) son públicos (opcional)
+                        .requestMatchers(HttpMethod.GET, "/api/citas/**").permitAll()
+
+                        // 🔒 Creación, edición y eliminación requieren autenticación JWT
+                        .requestMatchers(HttpMethod.POST, "/api/citas/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/citas/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/citas/**").authenticated()
+
+                        // Todo lo demás también autenticado
                         .anyRequest().authenticated()
                 )
                 // Inserta el filtro JWT antes del filtro de autenticación estándar
