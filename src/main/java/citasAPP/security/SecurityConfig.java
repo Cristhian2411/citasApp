@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // 🔓 Endpoints públicos (Swagger + autenticación)
+                        // Endpoints públicos (Swagger + autenticación)
                         .requestMatchers(
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
@@ -35,10 +35,7 @@ public class SecurityConfig {
                                 "/api/auth/**"
                         ).permitAll()
 
-                        // 👀 Endpoints de lectura de citas (GET) son públicos (opcional)
-                        .requestMatchers(HttpMethod.GET, "/api/citas/**").permitAll()
-
-                        // 🔒 Creación, edición y eliminación requieren autenticación JWT
+                        .requestMatchers(HttpMethod.GET, "/api/citas/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/citas/**").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/citas/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/citas/**").authenticated()
